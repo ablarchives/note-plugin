@@ -1,0 +1,17 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: Title
+        type: text
+        span: full
+tabs:
+    fields:
+      content:
+          label: Content
+          type: textarea
+          span: full
+          size: large
+          tab: Note

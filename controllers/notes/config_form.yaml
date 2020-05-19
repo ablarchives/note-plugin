@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Note
+
+# Model Form Field configuration
+form: $/albrightlabs/note/models/note/fields.yaml
+
+# Model Class name
+modelClass: AlbrightLabs\Note\Models\Note
+
+# Default redirect location
+defaultRedirect: albrightlabs/note/notes
+
+# Create page
+create:
+    title: Create Note
+    redirect: albrightlabs/note/notes/update/:id
+    redirectClose: albrightlabs/note/notes
+
+# Update page
+update:
+    title: Edit Note
+    redirect: albrightlabs/note/notes
+    redirectClose: albrightlabs/note/notes
+
+# Preview page
+preview:
+    title: Preview Note

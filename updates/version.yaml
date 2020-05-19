@@ -1,0 +1,4 @@
+1.0.1: First version of Note Plugin
+1.0.2:
+  - 'Create the notes table'
+  - create_notes_table.php

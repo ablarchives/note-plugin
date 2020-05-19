@@ -1,0 +1,28 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('albrightlabs/note/notes') ?>">Notes</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="control-toolbar">
+      <div class="toolbar-item toolbar-primary loading-indicator-container">
+          <div data-control="toolbar">
+              <a href="<?= Backend::url('albrightlabs/note/notes/create') ?>" type="button" class="btn btn-primary oc-icon-plus">New Note</a>
+              <a href="<?= Backend::url('albrightlabs/note/notes/update/'.$formModel->id) ?>" type="button" class="btn btn-default oc-icon-pencil">Edit</a>
+              <a href="javascript:void(0);" data-request="onDelete" data-request-confirm="You are deleting this note. Continue?" type="button" class="btn btn-danger oc-icon-trash">Delete</a>
+          </div>
+      </div>
+    </div>
+    <div class="form-preview">
+        <?= $this->formRenderPreview() ?>
+    </div>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('albrightlabs/note/notes') ?>" class="btn btn-default">Return to notes list</a></p>
+
+<?php endif ?>

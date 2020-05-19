@@ -1,0 +1,12 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+notes:
+    label: ' '
+    view:
+        list: $/albrightlabs/note/models/note/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/albrightlabs/note/models/note/fields.yaml
+        recordsPerPage: 10
