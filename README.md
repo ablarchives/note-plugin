@@ -1,11 +1,11 @@
-# Client Locations Plugin for OctoberCMS
+# Note Plugin for OctoberCMS
 
 **Background**  
-This plugin extends the Albright Client plugin and is used to add multiple note support to single clients. If the Albright Client plugin is not installed, the system can store general notes.
+This adds simple note management to application. If the AlbrightLabs.Client plugin is installed, this will extend it and add a notes tab to a single client view. Notes added via a client will only be attached to the client, but still visible from the notes controller.
 
 **Features**  
-- Simple note storage and management
-- Attach many notes to clients
+- Store notes
+- Add notes to clients (requires AlbrightLabs.Client plugin)
 
 **Install**  
 There are two options:
@@ -15,3 +15,9 @@ There are two options:
 **Update**  
 - `git pull origin master` or
 - `git pull --recursive-submodules`
+
+**Usage**  
+Simply install plugin and access via navigation.
+
+**Contribute**  
+Feel free to fork and contribute to this plugin! Please email support@albrightlabs.com with any and all questions.
