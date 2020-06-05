@@ -154,7 +154,7 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-sticky-note',
                 'iconSvg'     => '/plugins/albrightlabs/note/assets/img/icon.svg',
                 'permissions' => ['albrightlabs.note.*'],
-                'order'       => 510,
+                'order'       => 190,
             ],
         ];
     }
