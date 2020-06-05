@@ -28,6 +28,15 @@ class Plugin extends PluginBase
     }
 
     /**
+     * Returns required plugins.
+     *
+     * @return array
+     */
+    public $require = [
+        'AlbrightLabs.Client',
+    ];
+
+    /**
      * Register method, called when the plugin is first registered.
      *
      * @return void
@@ -44,86 +53,82 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        // If Client plugin is installed
-        if(PluginManager::instance()->exists('AlbrightLabs.Client')){
+        // Add relation to AlbrightLabs.Client Client model
+        Client::extend(function($model) {
+            $model->hasMany['notes'] = 'AlbrightLabs\Note\Models\Note';
+        });
 
-            // Add relation to AlbrightLabs.Client Client model
-            Client::extend(function($model) {
-                $model->hasMany['notes'] = 'AlbrightLabs\Note\Models\Note';
-            });
+        // Add relation config to AlbrightLabs.Client Clients controller
+        Clients::extend(function($controller){
+            // Only for the Clients controller
+            if (!$controller instanceof \AlbrightLabs\Client\Controllers\Clients) {
+                return;
+            }
+            if (!isset($controller->relationConfig)) {
+                $controller->addDynamicProperty('relationConfig');
+            }
+            $myConfigPath = '$/albrightlabs/note/controllers/notes/config_relation.yaml';
+            $controller->relationConfig = $controller->mergeConfig(
+                $controller->relationConfig,
+                $myConfigPath
+            );
+        });
 
-            // Add relation config to AlbrightLabs.Client Clients controller
-            Clients::extend(function($controller){
-                // Only for the Clients controller
-                if (!$controller instanceof \AlbrightLabs\Client\Controllers\Clients) {
-                    return;
-                }
-                if (!isset($controller->relationConfig)) {
-                    $controller->addDynamicProperty('relationConfig');
-                }
-                $myConfigPath = '$/albrightlabs/note/controllers/notes/config_relation.yaml';
-                $controller->relationConfig = $controller->mergeConfig(
-                    $controller->relationConfig,
-                    $myConfigPath
-                );
-            });
+        // Extend all backend form usage for AlbrightLabs.Client Client model
+        Event::listen('backend.form.extendFields', function($widget) {
 
-            // Extend all backend form usage for AlbrightLabs.Client Client model
-            Event::listen('backend.form.extendFields', function($widget) {
+            // Only for the Clients controller
+            if (!$widget->getController() instanceof \AlbrightLabs\Client\Controllers\Clients) {
+                return;
+            }
 
-                // Only for the Clients controller
-                if (!$widget->getController() instanceof \AlbrightLabs\Client\Controllers\Clients) {
-                    return;
-                }
+            // Only for the Client model
+            if (!$widget->model instanceof \AlbrightLabs\Client\Models\Client) {
+                return;
+            }
 
-                // Only for the Client model
-                if (!$widget->model instanceof \AlbrightLabs\Client\Models\Client) {
-                    return;
-                }
+            // Add the notes list field
+            $widget->addTabFields([
+                'notes' => [
+                    'label' => 'Notes',
+                    'type'  => 'partial',
+                    'path'  => '$/albrightlabs/note/controllers/notes/_field_notes.htm',
+                    'tab'   => 'Notes',
+                ],
+            ]);
+        });
 
-                // Add the notes list field
-                $widget->addTabFields([
-                    'notes' => [
-                        'label' => 'Notes',
-                        'type'  => 'partial',
-                        'path'  => '$/albrightlabs/note/controllers/notes/_field_notes.htm',
-                        'tab'   => 'Notes',
-                    ],
-                ]);
-            });
+        // Extend all backend form usage for AlbrightLabs.Note note model
+        Event::listen('backend.form.extendFields', function($widget) {
 
-            // Extend all backend form usage for AlbrightLabs.Note note model
-            Event::listen('backend.form.extendFields', function($widget) {
+            // Only for the Clients controller
+            if (!$widget->getController() instanceof \AlbrightLabs\Note\Controllers\Notes) {
+                return;
+            }
 
-                // Only for the Clients controller
-                if (!$widget->getController() instanceof \AlbrightLabs\Note\Controllers\Notes) {
-                    return;
-                }
+            // Only for the Client model
+            if (!$widget->model instanceof \AlbrightLabs\Note\Models\Note) {
+                return;
+            }
 
-                // Only for the Client model
-                if (!$widget->model instanceof \AlbrightLabs\Note\Models\Note) {
-                    return;
-                }
+            // Remove thte title field
+            $widget->removeField('title');
 
-                // Remove thte title field
-                $widget->removeField('title');
-
-                // Add the client dropdown and re-add title field
-                $widget->addFields([
-                    'client' => [
-                        'label'       => 'Client',
-                        'type'        => 'relation',
-                        'select'      => 'concat(name, " ", surname)',
-                        'placeholder' => '-- Select Client --',
-                    ],
-                    'title' => [
-                        'label' => 'Title',
-                        'type'  => 'text',
-                        'span'  => 'full',
-                    ],
-                ]);
-            });
-        }
+            // Add the client dropdown and re-add title field
+            $widget->addFields([
+                'client' => [
+                    'label'       => 'Client',
+                    'type'        => 'relation',
+                    'select'      => 'concat(name, " ", surname)',
+                    'placeholder' => '-- Select Client --',
+                ],
+                'title' => [
+                    'label' => 'Title',
+                    'type'  => 'text',
+                    'span'  => 'full',
+                ],
+            ]);
+        });
     }
 
     /**
