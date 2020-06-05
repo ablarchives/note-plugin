@@ -17,13 +17,13 @@ defaultRedirect: albrightlabs/note/notes
 # Create page
 create:
     title: Create Note
-    redirect: albrightlabs/note/notes/update/:id
+    redirect: albrightlabs/note/notes/preview/:id
     redirectClose: albrightlabs/note/notes
 
 # Update page
 update:
     title: Edit Note
-    redirect: albrightlabs/note/notes
+    redirect: albrightlabs/note/notes/preview/:id
     redirectClose: albrightlabs/note/notes
 
 # Preview page
