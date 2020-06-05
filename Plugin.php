@@ -149,7 +149,7 @@ class Plugin extends PluginBase
     {
         return [
             'note' => [
-                'label'       => 'Note',
+                'label'       => 'Notes',
                 'url'         => Backend::url('albrightlabs/note/notes'),
                 'icon'        => 'icon-sticky-note',
                 'iconSvg'     => '/plugins/albrightlabs/note/assets/img/icon.svg',
