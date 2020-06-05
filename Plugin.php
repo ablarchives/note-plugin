@@ -111,9 +111,10 @@ class Plugin extends PluginBase
                 // Add the client dropdown and re-add title field
                 $widget->addFields([
                     'client' => [
-                        'label'  => 'Client',
-                        'type'   => 'relation',
-                        'select' => 'concat(name, " ", surname)',
+                        'label'       => 'Client',
+                        'type'        => 'relation',
+                        'select'      => 'concat(name, " ", surname)',
+                        'placeholder' => '-- Select Client --',
                     ],
                     'title' => [
                         'label' => 'Title',
